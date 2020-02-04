@@ -1,0 +1,6 @@
+# Ignore OSX files
+.DS_store
+.DS_Store
+
+# Ignore RubyMine Configs
+.idea/
