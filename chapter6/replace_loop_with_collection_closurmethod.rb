@@ -1,25 +1,15 @@
 def managers_arr
-  managers = []
-  employees.each do |e|
-    managers << e if e.manager?
-  end
-  managers
+  employees.select{ |e| e.manager? }
 end
 
 def offices_arr
-  offieces = []
-  employees.each{ |e| offieces << e.office }
-  offieces
+  employees.collect{ |e| e.offiece }
 end
 
 def manager_offices_arr
-  manager_offices = []
-  employees.each{ |e| manager_offices << e.office if e.manager? }
-  manager_offices
+  employees.select{ |e| e.manager? }.collect{ |e| e.offiece }
 end
 
 def total_salary
-  total = 0
-  employees.each { |e| total += e.salary }
-  total
+  employees.inject(0){ |sum, e| sum + e.salary }
 end
