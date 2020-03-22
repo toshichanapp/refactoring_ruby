@@ -1,15 +1,16 @@
+class BalanceError < StandardError; end
+
 class Account
   def withdraw(amount)
-    return -1 if amount > @balance
+    raise BalanceError.new if amount > @balance
     @balance -= amount
-    return 0
   end
 end
 
 # 呼び出しもと
-
-if account.withdrew(amount) == -1
-  handle_overdrawn
-else
+begin
+  account.withdrew(amount)
   do_the_usual_thing
+rescue BalanceError
+  handle_overdrawn
 end
