@@ -11,14 +11,13 @@ class ResourcePool
   end
 
   def resource
-    begin
-      result = @available.pop
-      @allocated.push(result)
-      return result
-    rescue EmptyStackError
+    if @available.empty?
       result = Resource.new
-      @allocated.push(result)
-      return result
+    else
+      result = @available.pop
     end
+
+    @allocated.push(result)
+    return result
   end
 end
