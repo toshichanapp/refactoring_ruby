@@ -1,14 +1,23 @@
 class Account
   def withdraw(amount)
-    return -1 if amount > @balance
+    assert("Amount too large"){ amount <= @balance}
     @balance -= amount
-    return 0
+  end
+end
+
+module Assertion
+  class AssertionFailedError < StandardError; end
+
+  def assert(message, &condition)
+    unless condition.call
+      raise AssertionFailedError.new("Assertion Failed: #{message}")
+    end
   end
 end
 
 # 呼び出しもと
 
-if account.withdrew(amount) == -1
+if !account.can_withdraw?(amount)
   handle_overdrawn
 else
   do_the_usual_thing
