@@ -2,11 +2,7 @@ class Person
   attr_accessor :first_name, :last_name, :ssn
 
   def save
-    Gateway.save do |persist|
-      persist.subject = self
-      persist.attributes = [:first_name, :last_name, :ssn]
-      persist.to = 'http://www.example.com/person'
-    end
+    http.post(:first_name, :last_name, :ssn).to('http://www.example.com')
   end
 end
 
