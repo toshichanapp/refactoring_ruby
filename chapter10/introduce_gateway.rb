@@ -16,11 +16,13 @@ class Company
   attr_accessor :name, :tax_id
 
   def save
-    GetGateway.save do |persist|
-      persist.subject = self
-      persist.attributes = [:name, :tax_id]
-      persist.to = ''
-    end
+    http.get(:name, :tax_id).to('http://www.example.com')
+  end
+
+  private
+
+  def http
+    GatewayExpressionBuilder.new(self)
   end
 end
 
@@ -28,11 +30,14 @@ class Laptop
   attr_accessor :assigned_to, :serial_number
 
   def save
-    PostGateway.save do |persist|
-      persist.subject = self
-      persist.attributes = [:assigned_to, :serial_number]
-      persist.authenticate = true
-      persist.to = ''
+    def save
+      http.post(:assigned_to, :serial_number).with_authentication.to('')
     end
+  end
+
+  private
+
+  def http
+    GatewayExpressionBuilder.new(self)
   end
 end
