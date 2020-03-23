@@ -4,6 +4,12 @@ class Person
   def save
     http.post(:first_name, :last_name, :ssn).to('http://www.example.com')
   end
+
+  private
+
+  def http
+    GatewayExpressionBuilder.new(self)
+  end
 end
 
 class Company
